@@ -1,0 +1,34 @@
+// 类似动态规划，数字二叉树。父亲val给累加到孩子就行
+
+class Solution {
+public:
+    bool has;
+    bool hasPathSum(TreeNode *root, int sum) {
+        has = false;
+        if (root == 0)
+            return false;
+        hasSum(root, sum);
+        return has;
+    }
+    void hasSum(TreeNode* root, int sum)
+    {
+        if (has)
+            return;
+        if (root->left == 0 && root->right == 0)
+        {
+            if (root->val == sum)
+                has = true;
+            return;
+        }
+        if (root->left)
+        {
+            root->left->val += root->val;
+            hasSum(root->left, sum);
+        }
+        if (root->right)
+        {
+            root->right->val += root->val;
+            hasSum(root->right, sum);
+        }
+    }
+};

@@ -1,0 +1,17 @@
+// 左边和上边都是一，每个数都是左边和上边的数字之和
+class Solution {
+public:
+    int visit[101][101];
+    int uniquePaths(int m, int n) {
+        for (int i = 0; i < m; i++)
+            visit[i][0] = 1;
+        for (int k = 0; k < n; k++)
+            visit[0][k] = 1;
+        for (int i = 1; i < m; i++)
+            for (int k = 1; k < n; k++)
+            {
+                visit[i][k] = visit[i-1][k] + visit[i][k-1];
+            }
+        return visit[m-1][n-1];
+    }
+};

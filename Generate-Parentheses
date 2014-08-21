@@ -1,0 +1,90 @@
+#include "stdafx.h"
+#include <stdio.h>
+#include <vector>
+#include <string>
+#include <stack>
+#include <map>
+using namespace std;
+class Solution {
+public:
+    void swap(int A[], int i, int k)
+    {
+        int t = A[i];
+        A[i] = A[k];
+        A[k] = t;
+    }
+    void sortColors(int A[], int n) {
+        int start = 0;
+        int end = n-1;
+        int idx = 0;
+        for (int i = 0; i < n && i <= end; i++)
+        {
+            if (A[i] == 0)
+            {
+                swap(A, i, start);
+                start++;
+            }
+            else if (A[i] == 2)
+            {
+                swap(A, i, end);
+                end--;
+            }
+        }
+    }
+    int n;
+    vector<string> v;
+    vector<string> generateParenthesis(int n) {
+        this->n = n;
+        generate(1, n-1, "");
+        return v;
+    }
+    
+    // unmatched: 之前没有匹配的括号个数； left: 剩余几个括号; s: 到这一步的字符串
+    // 用递归，每一层是多一个左括号。每次匹配右括号，从0到最多个数
+    void generate(int unmatched, int left, string s)
+    {
+        if (left == 0)
+        {
+            s += "(";
+            for (int i = 0; i < unmatched; i++)
+                s += ")";
+            v.push_back(s);
+            return;
+        }
+        s += "(";
+        string m;
+        for (int i = 0; i <= unmatched; i++)
+        {
+            generate(unmatched-i+1, left-1, s+m);
+            m += ")";
+        }
+    }
+};
+void test1()
+{
+    Solution s;
+    //int A[] = {1,2,0};
+    //s.sortColors(A, 3);
+    vector<string> v = s.generateParenthesis(4);
+    for (int i = 0; i < v.size(); i++)
+        printf("%s\n", v[i].c_str());
+}
+void test2()
+{
+    Solution s;
+    //int A[] = {1};
+    //printf("test2 %d\n", s.removeElement(A, 1, 1) == 0);     
+}
+void test3()
+{
+    Solution s;
+    //int A[] = {-1};
+    //printf("test3 %d\n", s.maxSubArray(A, 1) == -1);     
+}
+int main()
+{
+    test1();
+    test2();
+    test3();
+    return 0;
+}

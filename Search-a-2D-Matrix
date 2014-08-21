@@ -1,0 +1,79 @@
+// 二分
+//
+#include "stdafx.h"
+#include <stdio.h>
+#include <vector>
+#include <string>
+#include <stack>
+#include <map>
+using namespace std;
+class Solution {
+public:
+    int target, rows, cols;
+    bool searchMatrix(vector<vector<int> > &matrix, int target) {
+        rows = matrix.size();
+        cols = matrix[0].size();
+        this->target = target;
+        return bsearch(0, rows*cols-1, matrix);
+    }
+    struct Pos
+    {
+        int x,y;
+    };
+    Pos Value(int index, vector<vector<int> > &matrix)
+    {
+        Pos p;
+        p.x = index / cols;
+        p.y = index % cols;
+        return p;
+    }
+    bool bsearch(int start, int end, vector<vector<int> > &matrix)
+    {
+        if (start >= end)
+        {
+            Pos p = Value(start,matrix);
+            if (matrix[p.x][p.y] == target)
+                return true;
+            return false;
+        }
+        else if (start + 1 == end)
+        {
+            Pos p1 = Value(start,matrix);
+            Pos p2 = Value(end,matrix);
+            if (matrix[p1.x][p1.y] == target || matrix[p2.x][p2.y] == target)
+                return true;
+            return false;
+        }
+        else
+        {
+            int m = start + (end - start) / 2;
+            if (bsearch(start, m, matrix) || bsearch(m+1, end, matrix))
+                return true;
+            return false;
+        }
+    }
+};
+void test1()
+{
+    Solution s;
+    //s.searchMatrix
+    //int A[] = {1,2,0};
+    //s.sortColors(A, 3);
+}
+void test2()
+{
+    Solution s;
+}
+void test3()
+{
+    Solution s;
+    //int A[] = {-1};
+    //printf("test3 %d\n", s.maxSubArray(A, 1) == -1);     
+}
+int main()
+{
+    test1();
+    test2();
+    test3();
+    return 0;
+}
