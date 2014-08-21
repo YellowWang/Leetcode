@@ -1,0 +1,80 @@
+// 二叉树广度遍历
+// 
+#include <stdio.h>
+#include <vector>
+#include <string>
+#include <stack>
+#include <queue>
+#include <map>
+using namespace std;
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+class Solution {
+public:
+    int minDepth(TreeNode *root) {
+        if (!root)
+            return 0;
+        deque<TreeNode*> q;
+        root->val = 1;
+        q.push_back(root);
+        while (q.size())
+        {
+            TreeNode* t = q.front();
+            
+            if (!t->left && !t->right)
+            {
+                return t->val;
+            }
+            if (t->left)
+            {
+                t->left->val = t->val + 1;
+                q.push_back(t->left);
+            }
+            if (t->right)
+            {
+                t->right->val = t->val + 1;
+                q.push_back(t->right);
+            }
+            q.pop_front();
+        }
+    }
+};
+void test1()
+{
+    Solution s;
+    TreeNode* root = new TreeNode(0);
+    root->left = new TreeNode(1);
+    root->left->left = root->left->right = 0;
+    root->right = 0;
+    printf("test1 %d\n", s.minDepth(root));
+}
+void test2()
+{
+    Solution s;
+}
+void test3()
+{
+    Solution s;
+    //int A[] = {-1};
+    //printf("test3 %d\n", s.maxSubArray(A, 1) == -1);     
+}
+int main()
+{
+    test1();
+    test2();
+    test3();
+    return 0;
+}
