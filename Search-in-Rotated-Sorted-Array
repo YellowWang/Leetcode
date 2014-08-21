@@ -1,0 +1,77 @@
+// 二分查找变种
+// 
+#include <stdio.h>
+#include <vector>
+#include <string>
+#include <stack>
+#include <map>
+using namespace std;
+class Solution {
+public:
+    int target;
+    int search(int A[], int n, int target) {
+        this->target = target;
+        return rsearch(A, 0, n-1);
+    }
+    // rsearch是用于旋转以后的搜索，二分后判断哪一部分是有序的，那么就用传统二分查找。
+    // 如果没有序，就二分后两个分支继续寻找
+    int rsearch(int A[], int start, int end)
+    {
+        if (start == end)
+        {
+            if (A[start] == target)
+                return start;
+            return -1;
+        }
+        if (A[start] <= A[end])
+            return bsearch(A, start, end);
+        else
+        {
+            int m = start + (end-start)/2;
+            int res = rsearch(A, start, m);
+            if (res == -1)
+                res = rsearch(A, m+1, end);
+            return res;
+        }
+    }
+    // 传统二分搜索
+    int bsearch(int A[], int start, int end)
+    {
+        if (start == end)
+        {
+            if (A[start] == target)
+                return start;
+            return -1;
+        }
+        int m = start + (end-start)/2;
+        if (A[m] >= target)
+            return bsearch(A, start, m);
+        else
+            return bsearch(A, m+1, end);
+    }
+};
+void test1()
+{
+    Solution s;
+    int A[] = {4, 5, 0, 1, 2, 3};
+    int r = s.search(A, 6, 4);
+}
+void test2()
+{
+    Solution s;
+    int A[] = {1,3,5};
+    int r = s.search(A, 3, 3);
+}
+void test3()
+{
+    Solution s;
+    //int A[] = {-1};
+    //printf("test3 %d\n", s.maxSubArray(A, 1) == -1);     
+}
+int main()
+{
+    test1();
+    test2();
+    test3();
+    return 0;
+}
